@@ -35,7 +35,12 @@ axios.get("https://www.dmm.co.jp/mono/dvd/-/detail/=/cid=ssis071/", { headers: {
   console.log(`Video title: ${chalk.green(videoTitle)}`);
 
   // Call function to download image with url
-  await downloadImage(actressImageLarge);
+  try {
+    const imageSavedLocation = await downloadImage(actressImageLarge);
+    console.log(`Image saved location: ${chalk.green(imageSavedLocation)}`);
+  } catch (error) {
+    console.log(error);
+  }
 
   // Base code
   //console.log(dom.window.document.querySelector("a[href='/mono/dvd/-/list/=/article=actress/id=1061509/']").textContent);
@@ -62,10 +67,12 @@ async function downloadImage(url) {
 
     return new Promise((resolve, reject) => {
       response.data.on('end', () => {
-        resolve();
+        // Get and display the dimensions of the image
+        console.log(sizeOf(saveImageName));
+        return resolve(saveImageName);
       })
       response.data.on('error', err => {
-        reject(err);
+        return reject(err);
       })
     })
 
