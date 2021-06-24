@@ -10,9 +10,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@types/jsdom": "^16.2.11",
     "axios": "^0.21.1",
     "chalk": "^4.1.1",
-    "jsdom": "^16.6.0"
+    "image-size": "^1.0.0",
+    "jsdom": "^16.6.0",
+    "sharp": "^0.28.3"
   }
 }

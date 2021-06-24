@@ -4,8 +4,9 @@ const { JSDOM } = jsdom;
 const chalk = require('chalk');
 const Path = require('path');
 const fs = require('fs');
+const sizeOf = require('image-size');
 
-axios.get("https://www.dmm.co.jp/mono/dvd/-/detail/=/cid=ssis071/", { headers: { "Cookie": "age_check_done=1"}}).then(async function (res) {
+axios.get("https://www.dmm.co.jp/mono/dvd/-/detail/=/cid=ssis088/", { headers: { "Cookie": "age_check_done=1"}}).then(async function (res) {
   //console.log(res);
   const dom = new JSDOM(res.data);
 
@@ -34,7 +35,12 @@ axios.get("https://www.dmm.co.jp/mono/dvd/-/detail/=/cid=ssis071/", { headers: {
   console.log(`Video title: ${chalk.green(videoTitle)}`);
 
   // Call function to download image with url
-  downloadImage(actressImageLarge);
+  try {
+    const imageSavedLocation = await downloadImage(actressImageLarge);
+    console.log(`Image saved location: ${chalk.green(imageSavedLocation)}`);
+  } catch (error) {
+    console.log(error);
+  }
 
   // Base code
   //console.log(dom.window.document.querySelector("a[href='/mono/dvd/-/list/=/article=actress/id=1061509/']").textContent);
@@ -48,6 +54,7 @@ async function downloadImage(url) {
   const imageFileNameWithExtension = Path.basename(url);
   console.log(imageFileNameWithExtension);
   const saveImageName = Path.resolve(__dirname, "downloaded", imageFileNameWithExtension);
+  console.log(saveImageName);
 
   try {
     const response = await axios( {
@@ -57,6 +64,21 @@ async function downloadImage(url) {
     });
 
     response.data.pipe(fs.createWriteStream(saveImageName));
+
+    return new Promise((resolve, reject) => {
+      response.data.on('end', () => {
+        // Get and display the dimensions of the image
+        console.log(sizeOf(saveImageName));
+        return resolve(saveImageName);
+      })
+      response.data.on('error', err => {
+        return reject(err);
+      })
+    })
+
+    // Get the image dimension
+    //const dimensions = sizeOf(saveImageName);
+    //console.log(dimensions.width, dimensions.height);
 
   // Error on axios
   } catch (error) {
