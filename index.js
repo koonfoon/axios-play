@@ -47,7 +47,7 @@ async function downloadImage(url) {
 
   const imageFileNameWithExtension = Path.basename(url);
   console.log(imageFileNameWithExtension);
-  const saveImageName = Path.resolve(__dirname, imageFileNameWithExtension);
+  const saveImageName = Path.resolve(__dirname, "downloaded", imageFileNameWithExtension);
 
   try {
     const response = await axios( {
