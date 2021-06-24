@@ -2,7 +2,7 @@ const sizeOf = require('image-size');
 const Path = require('path')
 const sharp = require('sharp');
 
-const imagePath = Path.resolve(__dirname, "downloaded", "ssis071pl.jpg");
+const imagePath = Path.resolve(__dirname, "downloaded", "ssis088pl.jpg");
 
 const dimensions = sizeOf(imagePath);
 

@@ -6,7 +6,7 @@ const Path = require('path');
 const fs = require('fs');
 const sizeOf = require('image-size');
 
-axios.get("https://www.dmm.co.jp/mono/dvd/-/detail/=/cid=ssis071/", { headers: { "Cookie": "age_check_done=1"}}).then(async function (res) {
+axios.get("https://www.dmm.co.jp/mono/dvd/-/detail/=/cid=ssis088/", { headers: { "Cookie": "age_check_done=1"}}).then(async function (res) {
   //console.log(res);
   const dom = new JSDOM(res.data);
 
