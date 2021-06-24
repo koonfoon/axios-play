@@ -4,6 +4,7 @@ const { JSDOM } = jsdom;
 const chalk = require('chalk');
 const Path = require('path');
 const fs = require('fs');
+const sizeOf = require('image-size');
 
 axios.get("https://www.dmm.co.jp/mono/dvd/-/detail/=/cid=ssis071/", { headers: { "Cookie": "age_check_done=1"}}).then(async function (res) {
   //console.log(res);
@@ -48,6 +49,7 @@ async function downloadImage(url) {
   const imageFileNameWithExtension = Path.basename(url);
   console.log(imageFileNameWithExtension);
   const saveImageName = Path.resolve(__dirname, "downloaded", imageFileNameWithExtension);
+  console.log(saveImageName);
 
   try {
     const response = await axios( {
@@ -57,6 +59,10 @@ async function downloadImage(url) {
     });
 
     response.data.pipe(fs.createWriteStream(saveImageName));
+
+    // Get the image dimension
+    //const dimensions = sizeOf(saveImageName);
+    //console.log(dimensions.width, dimensions.height);
 
   // Error on axios
   } catch (error) {
