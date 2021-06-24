@@ -15,6 +15,7 @@ const sizeToCrop = {
   top: 0
 };
 
+// Cropping size on the image to poster ratio
 const croppedFileNamePath = Path.resolve(__dirname, "downloaded", "poster.jpg");
 
 sharp(imagePath).extract(sizeToCrop).toFile(croppedFileNamePath)
