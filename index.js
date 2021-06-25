@@ -5,6 +5,7 @@ const chalk = require('chalk');
 const Path = require('path');
 const fs = require('fs');
 const sizeOf = require('image-size');
+const cropper = require('./imageSize.js');
 
 axios.get("https://www.dmm.co.jp/mono/dvd/-/detail/=/cid=ssis088/", { headers: { "Cookie": "age_check_done=1"}}).then(async function (res) {
   //console.log(res);
@@ -38,6 +39,7 @@ axios.get("https://www.dmm.co.jp/mono/dvd/-/detail/=/cid=ssis088/", { headers: {
   try {
     const imageSavedLocation = await downloadImage(actressImageLarge);
     console.log(`Image saved location: ${chalk.green(imageSavedLocation)}`);
+    await cropper.imageCropper(imageSavedLocation);
   } catch (error) {
     console.log(error);
   }
