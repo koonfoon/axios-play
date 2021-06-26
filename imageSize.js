@@ -27,7 +27,7 @@ const sharp = require('sharp');
 //     console.log("An error occured");
 //   })
 
-exports.imageCropper = async (targetImagePathAndNameWithExt) => {
+module.exports.imageCropper = async (targetImagePathAndNameWithExt) => {
 
   const imageName = Path.basename(targetImagePathAndNameWithExt).split(".")[0];
 
